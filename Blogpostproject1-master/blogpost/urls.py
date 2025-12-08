@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from posts.views import homepage, post, about, search, postlist, allposts
+
+from posts.views import homepage, post, about, search, postlist, allposts, library, book, tag_list, bmw
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,6 +14,10 @@ urlpatterns = [
     path('search/', search, name = 'search'),
     path('postlist/<slug>/', postlist, name = 'postlist'), 
     path('posts/', allposts, name = 'allposts'),
+    path('library/', library, name = 'library' ),
+    path('book/', book, name = 'book' ),
+    path('bmw/', bmw, name = 'bmw' ),
+    path('tag/', tag_list, name = 'tag_list' ),
     ]
 
 if settings.DEBUG:

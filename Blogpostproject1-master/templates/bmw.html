@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BMW Modelləri — Siyahı</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f7f9fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #0f172a;
+      --border: #e6edf3;
+      --radius: 12px;
+      --maxwidth: 900px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--accent);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px 16px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxwidth);
+    }
+
+    header{
+      margin-bottom:18px;
+    }
+
+    h1{
+      margin:0 0 6px 0;
+      font-size:1.6rem;
+      font-weight:600;
+    }
+
+    p.lead{
+      margin:0;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    /* search */
+    .controls{
+      margin:18px 0;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .search{
+      flex:1;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:10px;
+      font-size:0.95rem;
+      outline:none;
+    }
+
+    /* grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:0 6px 18px rgba(16,24,40,0.04);
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .badge{
+      min-width:54px;
+      height:54px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+      background:linear-gradient(135deg,#eef2ff,#f0fdf4);
+      color:var(--accent);
+      font-size:0.95rem;
+      border:1px solid var(--border);
+    }
+
+    .meta{
+      display:flex;
+      flex-direction:column;
+    }
+
+    .model{
+      font-weight:600;
+      font-size:1rem;
+      margin-bottom:4px;
+    }
+
+    .year{
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:0.9rem;
+      text-align:center;
+    }
+
+    /* small screens spacing */
+    @media (max-width:480px){
+      body{padding:20px 12px}
+      .badge{min-width:48px;height:48px;font-size:0.85rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>BMW Modelləri</h1>
+      <p class="lead">Ad və ilkin istehsal/başlanma ili — siyahı şəklində.</p>
+    </header>
+
+    <!-- axtarış (opsional) -->
+    <div class="controls">
+      <input id="search" class="search" placeholder="Axtar... (məs. X5, 3 Series, 1999)" />
+    </div>
+
+    <main>
+      <div id="grid" class="grid">
+        <!-- Hər kartda yalnız ad və il -->
+        <div class="card"><div class="badge"><img src="data:image/jpeg;base64,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" alt=""></div><div class="meta"><div class="model">BMW 3 Series</div><div class="year">1975</div></div></div>
+        <div class="card"><div class="badge"><img src="" alt=""></div><div class="meta"><div class="model">BMW 5 Series</div><div class="year">1972</div></div></div>
+        <div class="card"><div class="badge">7</div><div class="meta"><div class="model">BMW 7 Series</div><div class="year">1977</div></div></div>
+        <div class="card"><div class="badge">6</div><div class="meta"><div class="model">BMW 6 Series</div><div class="year">1976</div></div></div>
+        <div class="card"><div class="badge">8</div><div class="meta"><div class="model">BMW 8 Series</div><div class="year">1990</div></div></div>
+        <div class="card"><div class="badge">X5</div><div class="meta"><div class="model">BMW X5</div><div class="year">1999</div></div></div>
+        <div class="card"><div class="badge">X3</div><div class="meta"><div class="model">BMW X3</div><div class="year">2003</div></div></div>
+        <div class="card"><div class="badge">X1</div><div class="meta"><div class="model">BMW X1</div><div class="year">2009</div></div></div>
+      </div>
+    </main>
+
+    <footer>
+      Siyahını genişləndirmək və ya kart dizaynını dəyişmək istəyirsənsə, deyə bilərsən.
+    </footer>
+  </div>
+
+  <script>
+    // Sadə filter funksiyası (search qutusu işləyir)
+    const searchInput = document.getElementById('search');
+    const grid = document.getElementById('grid');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      const cards = grid.querySelectorAll('.card');
+      cards.forEach(card => {
+        const model = card.querySelector('.model').textContent.toLowerCase();
+        const year = card.querySelector('.year').textContent.toLowerCase();
+        if (!q || model.includes(q) || year.includes(q)) card.style.display = '';
+        else card.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+{% endblock content %}

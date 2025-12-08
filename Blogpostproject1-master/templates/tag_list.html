@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <form method="GET" action="{% url 'tag_list' %}">
+            <input type="text" name="q" placeholder="Tag axtar..." />
+            <button type="submit">🔍</button>
+        </form>
+        {% for i in tag %}
+
+      <div class="col-md-4">
+        
+      </div>
+      <div class="col-md-8">
+
+        <div class="card-body">
+            {{i.id}}
+            <h5 class="card-title">{{i.name}}</h5>
+
+          <p class="card-text"><small class="text-body-secondary">Last Update {{i.created_at}}</small></p>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}

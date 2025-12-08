@@ -18,6 +18,14 @@ class Category(models.Model):
 
     def _str_(self):
         return self.title
+    
+class Tag(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Post(models.Model):
@@ -30,6 +38,7 @@ class Post(models.Model):
     thumbnail = models.ImageField()
     categories = models.ManyToManyField(Category)
     featured = models.BooleanField()
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
 
     def _str_(self):
         return self.title

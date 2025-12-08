@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q 
-from .models import Category, Post, Author, AboutPage
+from .models import Category, Post, Author, AboutPage, Tag
 
 def get_author(user):
     qs = Author.objects.filter(user=user)
@@ -38,6 +38,20 @@ def about (request):
     }
     return render(request, 'about_page.html', context)
 
+def posts_by_tag(request, tag_name):
+    tag = get_object_or_404(Tag, name=tag_name)
+    posts = tag.posts.all()
+    return render(request, "posts_by_tag.html", {"tag": tag, "posts": posts})
+
+def library (request):
+    return render(request, 'library.html')
+
+def book (request):
+    return render(request, 'book.html')
+
+def bmw (request):
+    return render(request, 'bmw.html')
+
 def search(request):
     queryset = Post.objects.all()
     query = request.GET.get('q')
@@ -71,8 +85,8 @@ def search(request):
             }
         else:
             # Statik about məzmununda axtar
-            static_about_content = "A little bit about me. I am a 23 year old from South Africa. I am new to software development and this is my first tutorial to hopefully help some of you guys wanting to learn too. I hope you enjoy my teaching style and learn a lot from this. I know it's very basic but we have to start somewhere, hopefully sometime soon in the future you'll be learning some pretty cool stuff from me."
-            static_author = "SAVANNAH - New Django Developer"
+            static_about_content = "A little bit about me. I am a 18 year old from Azerbaijan.I am studying IT at the Azerbaijan University of Architecture and Constructor ."
+            static_author = "Vüqar Bayamov-Data analytics and Data science"
             
             if (query.lower() in static_about_content.lower() or 
                 query.lower() in static_author.lower()):
@@ -111,3 +125,13 @@ def allposts(request):
         'posts': posts,
     }
     return render(request, 'all_posts.html',context)
+
+def tag_list(request):
+    query = request.GET.get('q' , '').strip()
+
+    if query:
+        tags = Tag.objects.filter(name__icontains=query)
+    else:
+        tags = Tag.objects.all()
+
+    return render(request , 'tag_list.html' , {'tag':tags , 'query':query})

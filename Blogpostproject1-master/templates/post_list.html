@@ -18,6 +18,17 @@
             <img class="h-40 rounded w-full object-cover object-center mb-6" src="{{ post.thumbnail.url }}" alt="content">
             <h3 class="tracking-widest text-pink-500 text-xs font-medium title-font">
               {{ post.subtitle }}</h3>
+<!--y-  -->
+              <p class="mt-2">
+              {% for tag in post.tags.all %}
+                <span class="text-xs bg-pink-200 text-pink-800 px-2 py-1 rounded mr-1">
+                  #{{ tag.name }}
+                </span>
+              {% empty %}
+                <span class="text-xs text-gray-400">Tag yoxdur</span>
+              {% endfor %}
+            </p>
+<!-- y -->
             <a href="{% url 'post' post.slug %}" h2 class="rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-pink-300 duration-300 text-lg text-gray-700 font-medium title-font mb-4">
               {{ post.title }}</a>
             <p class="leading-relaxed text-base">
